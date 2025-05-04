@@ -1,5 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import logo from '../assets/images/logo-liam.png';
 import './MainLayout.scss';
 
 export const MainLayout: React.FC = () => {
@@ -7,7 +8,7 @@ export const MainLayout: React.FC = () => {
     <div className="layout">
       <header className="header">
         <div className="container">
-          <h1>Analisis de datos</h1>
+          <img src={logo} alt="Liam Analytics Logo" />
         </div>
       </header>
       
@@ -19,7 +20,7 @@ export const MainLayout: React.FC = () => {
       
       <footer className="footer">
         <div className="container">
-          <p>&copy; 2024 Analisis de datos. Todos los derechos reservados.</p>
+          <p>&copy; 2024 Liam Analytics. Todos los derechos reservados.</p>
         </div>
       </footer>
     </div>
