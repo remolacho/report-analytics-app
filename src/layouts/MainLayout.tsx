@@ -7,7 +7,7 @@ export const MainLayout: React.FC = () => {
     <div className="layout">
       <header className="header">
         <div className="container">
-          <h1>Reportería Conversacional</h1>
+          <h1>Analisis de datos</h1>
         </div>
       </header>
       
@@ -19,7 +19,7 @@ export const MainLayout: React.FC = () => {
       
       <footer className="footer">
         <div className="container">
-          <p>&copy; 2024 Reportería Conversacional. Todos los derechos reservados.</p>
+          <p>&copy; 2024 Analisis de datos. Todos los derechos reservados.</p>
         </div>
       </footer>
     </div>

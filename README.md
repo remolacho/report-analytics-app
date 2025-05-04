@@ -1,4 +1,4 @@
-# Reportería Conversacional - Frontend
+# Analisis de datos - Frontend
 
 Una aplicación moderna de análisis de datos basada en chat que permite a los usuarios interactuar con sus datos a través de una interfaz conversacional intuitiva.
 
