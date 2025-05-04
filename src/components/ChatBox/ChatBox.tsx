@@ -191,8 +191,8 @@ export const ChatBox: React.FC = () => {
       console.log(`${key}:`, value);
     }
     
-    // Simula un tiempo de respuesta
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // Simula un tiempo de respuesta de 5 segundos
+    await new Promise(resolve => setTimeout(resolve, 5000));
     
     // Simula una respuesta exitosa
     return Promise.resolve();
@@ -202,6 +202,9 @@ export const ChatBox: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputMessage.trim() && !attachedFile) return;
+
+    // Deshabilitar el formulario mientras se procesa
+    setIsLoading(true);
 
     // Crear FormData
     const formData = new FormData();
@@ -237,9 +240,8 @@ export const ChatBox: React.FC = () => {
       });
     }
 
-    // Agregar mensajes al chat y mostrar loading
+    // Agregar mensajes al chat
     setMessages(prev => [...prev, ...messages]);
-    setIsLoading(true);
 
     try {
       // Enviar datos a la API
@@ -268,6 +270,7 @@ export const ChatBox: React.FC = () => {
       setMessages(prev => [...prev, errorMessage]);
       console.error('Error al enviar datos:', error);
     } finally {
+      // Habilitar el formulario después de procesar
       setIsLoading(false);
     }
   };
@@ -301,6 +304,7 @@ export const ChatBox: React.FC = () => {
                 onClick={handleRemoveFile}
                 className="remove-file"
                 title="Eliminar archivo"
+                disabled={isLoading}
               >
                 ✕
               </button>
@@ -317,12 +321,14 @@ export const ChatBox: React.FC = () => {
             onChange={(e) => setInputMessage(e.target.value)}
             placeholder={attachedFile ? "Describe qué análisis deseas realizar con este archivo..." : "Escribe tu mensaje aquí..."}
             disabled={isLoading}
+            aria-label="Mensaje"
           />
           <button 
             type="submit" 
             disabled={isLoading || (!inputMessage.trim() && !attachedFile)}
+            aria-label={isLoading ? "Enviando..." : "Enviar mensaje"}
           >
-            Enviar
+            {isLoading ? 'Enviando...' : 'Enviar'}
           </button>
         </div>
       </form>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo -->
+  <rect width="512" height="512" rx="100" fill="#2563eb"/>
+  
+  <!-- Gráfico de barras estilizado -->
+  <rect x="128" y="320" width="64" height="96" rx="8" fill="white" opacity="0.9"/>
+  <rect x="224" y="256" width="64" height="160" rx="8" fill="white" opacity="0.9"/>
+  <rect x="320" y="192" width="64" height="224" rx="8" fill="white" opacity="0.9"/>
+  
+  <!-- Línea de tendencia -->
+  <path d="M128 280 L384 160" stroke="white" stroke-width="12" stroke-linecap="round" opacity="0.6"/>
+  
+  <!-- Puntos de datos -->
+  <circle cx="128" cy="280" r="12" fill="white"/>
+  <circle cx="224" cy="220" r="12" fill="white"/>
+  <circle cx="320" cy="180" r="12" fill="white"/>
+  <circle cx="384" cy="160" r="12" fill="white"/>
+</svg> 
