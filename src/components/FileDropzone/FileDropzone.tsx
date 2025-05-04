@@ -24,8 +24,8 @@ export const FileDropzone: React.FC<FileDropzoneProps> = ({ onDrop }) => {
       'application/vnd.ms-excel': ['.xls'],
       'text/csv': ['.csv']
     },
-    noClick: false,
-    noKeyboard: false
+    maxFiles: 1,
+    multiple: false
   });
 
   const isActive = isDragActive || isDraggingFile;
@@ -39,16 +39,15 @@ export const FileDropzone: React.FC<FileDropzoneProps> = ({ onDrop }) => {
       <div className="dropzone-content">
         {isActive ? (
           <>
-            <div className="dropzone-icon">📥</div>
-            <p className="dropzone-text">¡Suelta los archivos aquí!</p>
+            <div className="dropzone-icon">📊</div>
+            <p className="dropzone-text">¡Suelta el archivo aquí!</p>
           </>
         ) : (
           <>
-            <div className="dropzone-icon">📎</div>
-            <p className="dropzone-text">Arrastra archivos aquí o haz clic para seleccionar</p>
+            <div className="dropzone-icon">📊</div>
+            <p className="dropzone-text">Adjunta un archivo de datos</p>
             <div className="dropzone-formats">
               <span className="format-badge">XLSX</span>
-              <span className="format-badge">XLS</span>
               <span className="format-badge">CSV</span>
               <span className="format-badge">JSON</span>
             </div>
