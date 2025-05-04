@@ -14,7 +14,7 @@ export const Home: React.FC = () => {
           informes detallados en tiempo real. Optimiza tu proceso de toma de decisiones
           con tecnología de vanguardia.
         </p>
-        <Link to="/branch" className="home__cta">
+        <Link to="/chats-analytics" className="home__cta">
           <FaRocket style={{ marginRight: '10px' }} />
           Iniciar Análisis
         </Link>

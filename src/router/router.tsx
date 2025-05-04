@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { MainLayout } from '../layouts/MainLayout';
 import { ChatPage } from '../pages/ChatPage';
 import { Home } from '../pages/Home';
-import { BranchPage } from '../pages/BranchPage';
+import { ChatListPage } from '../pages/ChatListPage';
 
 export const router = createBrowserRouter([
   {
@@ -14,12 +14,12 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: 'chat',
+        path: 'chat-analytic',
         element: <ChatPage />,
       },
       {
-        path: 'branch',
-        element: <BranchPage />,
+        path: 'chats-analytics',
+        element: <ChatListPage />,
       },
     ],
   },
