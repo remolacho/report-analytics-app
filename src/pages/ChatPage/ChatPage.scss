@@ -1,0 +1,5 @@
+.chat-page {
+  height: calc(100vh - var(--spacing-lg) * 2 - 60px); // Ajuste para el header y footer
+  display: flex;
+  flex-direction: column;
+} 

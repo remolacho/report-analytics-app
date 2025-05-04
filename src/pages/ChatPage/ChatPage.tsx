@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChatBox } from '../components/@Analytics';
+import { ChatBox } from '../../components/@Analytics';
 import './ChatPage.scss';
 
 export const ChatPage: React.FC = () => {
