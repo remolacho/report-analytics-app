@@ -1,5 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import { Breadcrumbs } from '../components/Breadcrumbs';
 import logo from '../assets/images/logo-liam.png';
 import './MainLayout.scss';
 
@@ -14,6 +15,7 @@ export const MainLayout: React.FC = () => {
       
       <main className="main">
         <div className="container">
+          <Breadcrumbs />
           <Outlet />
         </div>
       </main>
