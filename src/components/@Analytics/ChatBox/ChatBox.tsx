@@ -1,12 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Message } from '../Message';
 import { FileDropzone } from '../FileDropzone';
+import { VisualizationSpec } from 'vega-embed';
 import './ChatBox.scss';
-
-interface ChartDataItem {
-  genero: string;
-  cantidad: number;
-}
 
 // Tipos de mensajes que puede manejar el chat
 interface MessageData {
@@ -14,8 +10,7 @@ interface MessageData {
   content?: string;
   text?: string;
   url?: string;
-  chartType?: string;
-  data?: ChartDataItem[];
+  vegaSpec?: VisualizationSpec;
   sender: 'user' | 'system';
   timestamp: number;
 }
@@ -97,12 +92,34 @@ const dummyResponses: MessageData[] = [
   },
   {
     type: 'graph',
-    chartType: 'bar',
-    data: [
-      { genero: 'Octubre', cantidad: 45000 },
-      { genero: 'Noviembre', cantidad: 52000 },
-      { genero: 'Diciembre', cantidad: 68000 }
-    ],
+    vegaSpec: {
+      $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+      description: 'Ventas por Mes Q4 2023',
+      data: {
+        values: [
+          { mes: 'Octubre', ventas: 45000, color: '#FF9800' },
+          { mes: 'Noviembre', ventas: 52000, color: '#2196F3' },
+          { mes: 'Diciembre', ventas: 68000, color: '#4CAF50' }
+        ]
+      },
+      mark: 'bar',
+      encoding: {
+        x: { field: 'mes', type: 'nominal', title: 'Mes' },
+        y: { field: 'ventas', type: 'quantitative', title: 'Ventas ($)' },
+        color: {
+          field: 'color',
+          type: 'nominal',
+          scale: null,
+          legend: null
+        }
+      },
+      width: 500,
+      height: 300,
+      config: {
+        view: { stroke: 'transparent' },
+        axis: { labelFont: 'Inter, sans-serif', titleFont: 'Inter, sans-serif' }
+      }
+    },
     sender: 'system',
     timestamp: Date.now() + 6000
   },

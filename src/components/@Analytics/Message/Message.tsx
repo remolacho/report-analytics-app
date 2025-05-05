@@ -1,30 +1,7 @@
 import React from 'react';
-import { Bar } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-} from 'chart.js';
+import { VegaLite } from 'react-vega';
+import { VisualizationSpec } from 'vega-embed';
 import './Message.scss';
-
-// Registrar los componentes necesarios para Chart.js
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-interface ChartDataItem {
-  genero: string;
-  cantidad: number;
-}
 
 interface MessageProps {
   message: {
@@ -32,8 +9,7 @@ interface MessageProps {
     content?: string;
     text?: string;
     url?: string;
-    chartType?: string;
-    data?: ChartDataItem[];
+    vegaSpec?: VisualizationSpec;
     sender: 'user' | 'system';
     timestamp: number;
   };
@@ -54,34 +30,10 @@ export const Message: React.FC<MessageProps> = ({ message }) => {
         );
       
       case 'graph':
-        if (message.chartType === 'bar' && message.data) {
-          const chartData = {
-            labels: message.data.map((item: ChartDataItem) => item.genero),
-            datasets: [
-              {
-                label: 'Cantidad',
-                data: message.data.map((item: ChartDataItem) => item.cantidad),
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-              },
-            ],
-          };
-
-          const options = {
-            responsive: true,
-            plugins: {
-              legend: {
-                position: 'top' as const,
-              },
-              title: {
-                display: true,
-                text: 'Distribución por Género',
-              },
-            },
-          };
-
+        if (message.vegaSpec) {
           return (
             <div className="message-chart">
-              <Bar data={chartData} options={options} />
+              <VegaLite spec={message.vegaSpec} />
             </div>
           );
         }
