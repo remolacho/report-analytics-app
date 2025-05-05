@@ -69,7 +69,7 @@ La aplicación maneja varios tipos de mensajes:
 - `text`: Mensajes de texto simples
 - `html`: Contenido HTML embebido (tablas, etc.)
 - `image`: Imágenes y gráficos
-- `chart_data`: Datos para gráficos interactivos
+- `graph`: Datos para gráficos interactivos
 - `download`: Enlaces de descarga para archivos
 
 ## Próximas Características

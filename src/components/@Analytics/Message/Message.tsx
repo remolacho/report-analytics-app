@@ -28,7 +28,7 @@ interface ChartDataItem {
 
 interface MessageProps {
   message: {
-    type: 'text' | 'html' | 'image' | 'chart_data' | 'download';
+    type: 'text' | 'html' | 'graph' | 'download';
     content?: string;
     text?: string;
     url?: string;
@@ -53,20 +53,7 @@ export const Message: React.FC<MessageProps> = ({ message }) => {
           />
         );
       
-      case 'image':
-        return (
-          <div className="message-image-container">
-            <img
-              src={message.url}
-              alt={message.text || 'Contenido del mensaje'}
-              className="message-image"
-              loading="lazy"
-            />
-            {message.text && <p className="message-image-caption">{message.text}</p>}
-          </div>
-        );
-      
-      case 'chart_data':
+      case 'graph':
         if (message.chartType === 'bar' && message.data) {
           const chartData = {
             labels: message.data.map((item: ChartDataItem) => item.genero),

@@ -10,7 +10,7 @@ interface ChartDataItem {
 
 // Tipos de mensajes que puede manejar el chat
 interface MessageData {
-  type: 'text' | 'html' | 'image' | 'chart_data' | 'download';
+  type: 'text' | 'html' | 'graph' | 'download';
   content?: string;
   text?: string;
   url?: string;
@@ -96,7 +96,7 @@ const dummyResponses: MessageData[] = [
     timestamp: Date.now() + 5000
   },
   {
-    type: 'chart_data',
+    type: 'graph',
     chartType: 'bar',
     data: [
       { genero: 'Octubre', cantidad: 45000 },
@@ -105,13 +105,6 @@ const dummyResponses: MessageData[] = [
     ],
     sender: 'system',
     timestamp: Date.now() + 6000
-  },
-  {
-    type: 'image',
-    url: '/examples/sales-trend.png',
-    text: 'Gráfico de tendencias de ventas del último trimestre',
-    sender: 'system',
-    timestamp: Date.now() + 7000
   },
   {
     type: 'text',
