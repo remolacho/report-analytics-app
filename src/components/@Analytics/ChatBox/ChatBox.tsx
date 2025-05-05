@@ -4,13 +4,18 @@ import { FileDropzone } from '../FileDropzone';
 import { VisualizationSpec } from 'vega-embed';
 import './ChatBox.scss';
 
+interface VegaRailsSpec {
+  schema: string;
+  spec: VisualizationSpec;
+}
+
 // Tipos de mensajes que puede manejar el chat
 interface MessageData {
   type: 'text' | 'html' | 'graph' | 'download';
   content?: string;
   text?: string;
   url?: string;
-  vegaSpec?: VisualizationSpec;
+  vegaSpec?: VegaRailsSpec;
   sender: 'user' | 'system';
   timestamp: number;
 }
@@ -93,31 +98,50 @@ const dummyResponses: MessageData[] = [
   {
     type: 'graph',
     vegaSpec: {
-      $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
-      description: 'Ventas por Mes Q4 2023',
-      data: {
-        values: [
-          { mes: 'Octubre', ventas: 45000, color: '#FF9800' },
-          { mes: 'Noviembre', ventas: 52000, color: '#2196F3' },
-          { mes: 'Diciembre', ventas: 68000, color: '#4CAF50' }
-        ]
-      },
-      mark: 'bar',
-      encoding: {
-        x: { field: 'mes', type: 'nominal', title: 'Mes' },
-        y: { field: 'ventas', type: 'quantitative', title: 'Ventas ($)' },
-        color: {
-          field: 'color',
-          type: 'nominal',
-          scale: null,
-          legend: null
+      schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+      spec: {
+        $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+        width: 'container',
+        height: 'container',
+        data: {
+          values: [
+            { mes: "ENERO", total: 3235410778.0 },
+            { mes: "FEBRERO", total: 3038201415.0 },
+            { mes: "MARZO", total: 3027072789.0 },
+            { mes: "ABRIL", total: 3123907270.0 },
+            { mes: "MAYO", total: 3014326142.0 },
+            { mes: "JUNIO", total: 2894837047.0 },
+            { mes: "JULIO", total: 2957090905.0 },
+            { mes: "AGOSTO", total: 2988254621.0 },
+            { mes: "SEPTIEMBRE", total: 3046432974.0 },
+            { mes: "OCTUBRE", total: 3123143228.0 },
+            { mes: "NOVIEMBRE", total: 3097158068.0 },
+            { mes: "DICIEMBRE", total: 3211788863.0 }
+          ]
+        },
+        mark: {
+          type: "bar",
+          tooltip: true
+        },
+        encoding: {
+          y: {
+            field: "total",
+            type: "quantitative"
+          },
+          x: {
+            field: "mes",
+            type: "nominal",
+            sort: null,
+            axis: {
+              labelAngle: 0
+            }
+          }
+        },
+        config: {
+          axis: {
+            labelFontSize: 12
+          }
         }
-      },
-      width: 500,
-      height: 300,
-      config: {
-        view: { stroke: 'transparent' },
-        axis: { labelFont: 'Inter, sans-serif', titleFont: 'Inter, sans-serif' }
       }
     },
     sender: 'system',

@@ -3,13 +3,18 @@ import { VegaLite } from 'react-vega';
 import { VisualizationSpec } from 'vega-embed';
 import './Message.scss';
 
+interface VegaRailsSpec {
+  schema: string;
+  spec: VisualizationSpec;
+}
+
 interface MessageProps {
   message: {
     type: 'text' | 'html' | 'graph' | 'download';
     content?: string;
     text?: string;
     url?: string;
-    vegaSpec?: VisualizationSpec;
+    vegaSpec?: VegaRailsSpec;
     sender: 'user' | 'system';
     timestamp: number;
   };
@@ -30,10 +35,10 @@ export const Message: React.FC<MessageProps> = ({ message }) => {
         );
       
       case 'graph':
-        if (message.vegaSpec) {
+        if (message.vegaSpec?.spec) {
           return (
             <div className="message-chart">
-              <VegaLite spec={message.vegaSpec} />
+              <VegaLite spec={message.vegaSpec.spec} />
             </div>
           );
         }
