@@ -1,5 +1,6 @@
 import React from 'react';
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash, FaEye } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 export interface Chat {
@@ -14,6 +15,8 @@ interface TableProps {
 }
 
 export const Table: React.FC<TableProps> = ({ chats, onDelete }) => {
+  const navigate = useNavigate();
+
   const handleDelete = (uid: string) => {
     Swal.fire({
       title: '¿Estás seguro?',
@@ -36,6 +39,10 @@ export const Table: React.FC<TableProps> = ({ chats, onDelete }) => {
     });
   };
 
+  const handleView = (uid: string) => {
+    navigate(`/chat-analytic/${uid}`);
+  };
+
   return (
     <div className="table-container">
       <table className="chats-table">
@@ -45,7 +52,13 @@ export const Table: React.FC<TableProps> = ({ chats, onDelete }) => {
               <td>{chat.uid}</td>
               <td>{new Date(chat.createdAt).toLocaleDateString()}</td>
               <td>{chat.reference}</td>
-              <td>
+              <td className="actions-column">
+                <button
+                  className="view-button"
+                  onClick={() => handleView(chat.uid)}
+                >
+                  <FaEye />
+                </button>
                 <button
                   className="delete-button"
                   onClick={() => handleDelete(chat.uid)}

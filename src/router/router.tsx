@@ -18,6 +18,10 @@ export const router = createBrowserRouter([
         element: <ChatPage />,
       },
       {
+        path: 'chat-analytic/:chatId',
+        element: <ChatPage />,
+      },
+      {
         path: 'chats-analytics',
         element: <ChatListPage />,
       },
