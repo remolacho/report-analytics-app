@@ -46,22 +46,32 @@ export const Table: React.FC<TableProps> = ({ chats, onDelete }) => {
   return (
     <div className="table-container">
       <table className="chats-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>Referencia</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
         <tbody>
           {chats.map((chat) => (
             <tr key={chat.uid}>
               <td>{chat.uid}</td>
-              <td>{new Date(chat.createdAt).toLocaleDateString()}</td>
+              <td>{chat.createdAt.toLocaleDateString()}</td>
               <td>{chat.reference}</td>
               <td className="actions-column">
                 <button
                   className="view-button"
                   onClick={() => handleView(chat.uid)}
+                  title="Ver chat"
                 >
                   <FaEye />
                 </button>
                 <button
                   className="delete-button"
                   onClick={() => handleDelete(chat.uid)}
+                  title="Eliminar chat"
                 >
                   <FaTrash />
                 </button>

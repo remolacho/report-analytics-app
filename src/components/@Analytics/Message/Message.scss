@@ -45,13 +45,53 @@
   }
 
   .message-html {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+
+    .html-content {
+      width: 100%;
+      background-color: white;
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+    }
+
+    .download-button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: var(--secondary-color);
+      color: white;
+      border: none;
+      padding: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      border-radius: 4px;
+      width: 28px;
+      height: 28px;
+      margin: 8px;
+      z-index: 1;
+
+      &:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+      }
+
+      .icon {
+        font-size: 16px;
+      }
+    }
+
     table {
       border-collapse: collapse;
       width: 100%;
       background-color: white;
       border-radius: var(--border-radius-md);
       overflow: hidden;
-      margin: var(--spacing-sm) 0;
       border: 1px solid var(--border-color);
 
       th, td {
@@ -137,6 +177,11 @@
     .download-icon {
       font-size: 1.2em;
     }
+  }
+
+  .message-preview {
+    position: relative;
+    width: 100%;
   }
 
   // Estilos específicos para tipos de contenido

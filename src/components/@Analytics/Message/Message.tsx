@@ -1,12 +1,7 @@
 import React from 'react';
-import { VegaLite } from 'react-vega';
-import { VisualizationSpec } from 'vega-embed';
+import { CustomVegaChart } from '../VegaChart/CustomVegaChart';
+import { VegaRailsSpec } from '../../../types/vega';
 import './Message.scss';
-
-interface VegaRailsSpec {
-  schema: string;
-  spec: VisualizationSpec;
-}
 
 interface MessageProps {
   message: {
@@ -21,6 +16,11 @@ interface MessageProps {
 }
 
 export const Message: React.FC<MessageProps> = ({ message }) => {
+  const handleDownload = () => {
+    // TODO: Implementar cuando el endpoint esté disponible
+    console.log('Descarga no implementada aún');
+  };
+
   const renderContent = () => {
     switch (message.type) {
       case 'text':
@@ -28,17 +28,27 @@ export const Message: React.FC<MessageProps> = ({ message }) => {
       
       case 'html':
         return (
-          <div
-            className="message-html"
-            dangerouslySetInnerHTML={{ __html: message.content || '' }}
-          />
+          <div className="message-html">
+            <button 
+              className="download-button" 
+              onClick={handleDownload}
+              title="Descargar CSV"
+            >
+              <span className="icon">⤓</span>
+            </button>
+            <br />
+            <div
+              className="html-content"
+              dangerouslySetInnerHTML={{ __html: message.content || '' }}
+            />
+          </div>
         );
       
       case 'graph':
         if (message.vegaSpec?.spec) {
           return (
             <div className="message-chart">
-              <VegaLite spec={message.vegaSpec.spec} />
+              <CustomVegaChart spec={message.vegaSpec.spec} />
             </div>
           );
         }
