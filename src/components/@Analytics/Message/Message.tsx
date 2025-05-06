@@ -1,12 +1,7 @@
-import React from 'react';
-import { VegaLite } from 'react-vega';
-import { VisualizationSpec } from 'vega-embed';
+import React, { useState } from 'react';
+import { CustomVegaChart } from '../VegaChart/CustomVegaChart';
+import { VegaRailsSpec } from '../../../types/vega';
 import './Message.scss';
-
-interface VegaRailsSpec {
-  schema: string;
-  spec: VisualizationSpec;
-}
 
 interface MessageProps {
   message: {
@@ -21,6 +16,14 @@ interface MessageProps {
 }
 
 export const Message: React.FC<MessageProps> = ({ message }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const handleExport = (format: string) => {
+    // TODO: Implementar cuando el endpoint esté disponible
+    console.log(`Exportar en formato ${format} no implementado aún`);
+    setIsDropdownOpen(false);
+  };
+
   const renderContent = () => {
     switch (message.type) {
       case 'text':
@@ -28,17 +31,36 @@ export const Message: React.FC<MessageProps> = ({ message }) => {
       
       case 'html':
         return (
-          <div
-            className="message-html"
-            dangerouslySetInnerHTML={{ __html: message.content || '' }}
-          />
+          <div className="message-html">
+            <div className="export-dropdown">
+              <button 
+                className="export-button" 
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                title="Exportar datos"
+              >
+                <span className="icon">⤓</span>
+              </button>
+              {isDropdownOpen && (
+                <div className="dropdown-menu">
+                  <button onClick={() => handleExport('xlsx')}>XLSX</button>
+                  <button onClick={() => handleExport('csv')}>CSV</button>
+                  <button onClick={() => handleExport('json')}>JSON</button>
+                </div>
+              )}
+            </div>
+            <br />
+            <div
+              className="html-content"
+              dangerouslySetInnerHTML={{ __html: message.content || '' }}
+            />
+          </div>
         );
       
       case 'graph':
         if (message.vegaSpec?.spec) {
           return (
             <div className="message-chart">
-              <VegaLite spec={message.vegaSpec.spec} />
+              <CustomVegaChart spec={message.vegaSpec.spec} />
             </div>
           );
         }

@@ -16,6 +16,16 @@
     display: flex;
     justify-content: center;
   }
+
+  &__delete-error {
+    background-color: #fee2e2;
+    border: 1px solid #ef4444;
+    color: #dc2626;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border-radius: 0.375rem;
+    text-align: center;
+  }
 }
 
 .search-bar {
