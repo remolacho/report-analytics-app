@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaSpinner } from 'react-icons/fa';
+import { createChat } from '../../services/chat/Create/createService';
 import './CreateChatForm.scss';
 
 interface CreateChatFormProps {
@@ -10,19 +11,26 @@ interface CreateChatFormProps {
 export const CreateChatForm: React.FC<CreateChatFormProps> = ({ onClose }) => {
   const [reference, setReference] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError(null);
 
     try {
-      // Simulación de llamada a API
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      onClose();
-      navigate('/chat-analytic');
+      const response = await createChat(reference);
+      if (response.success) {
+        onClose();
+        // Navegamos al chat con el ID creado
+        navigate(`/chat-analytic/${response.data.id}`);
+      } else {
+        setError('Error al crear el chat');
+      }
     } catch (error) {
       console.error('Error al crear el chat:', error);
+      setError('Error al crear el chat. Por favor, intente nuevamente.');
     } finally {
       setIsLoading(false);
     }
@@ -41,6 +49,7 @@ export const CreateChatForm: React.FC<CreateChatFormProps> = ({ onClose }) => {
           required
           disabled={isLoading}
         />
+        {error && <div className="create-chat-form__error">{error}</div>}
       </div>
 
       <div className="create-chat-form__actions">

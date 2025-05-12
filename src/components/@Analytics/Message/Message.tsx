@@ -1,45 +1,29 @@
-import React from 'react';
-import { Bar } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-} from 'chart.js';
+import React, { useState } from 'react';
+import { CustomVegaChart } from '../VegaChart/CustomVegaChart';
+import { VegaRailsSpec } from '../../../types/vega';
 import './Message.scss';
-
-// Registrar los componentes necesarios para Chart.js
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-interface ChartDataItem {
-  genero: string;
-  cantidad: number;
-}
 
 interface MessageProps {
   message: {
-    type: 'text' | 'html' | 'image' | 'chart_data' | 'download';
+    type: 'text' | 'html' | 'graph' | 'download';
     content?: string;
     text?: string;
     url?: string;
-    chartType?: string;
-    data?: ChartDataItem[];
+    vegaSpec?: VegaRailsSpec;
     sender: 'user' | 'system';
     timestamp: number;
   };
 }
 
 export const Message: React.FC<MessageProps> = ({ message }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const handleExport = (format: string) => {
+    // TODO: Implementar cuando el endpoint esté disponible
+    console.log(`Exportar en formato ${format} no implementado aún`);
+    setIsDropdownOpen(false);
+  };
+
   const renderContent = () => {
     switch (message.type) {
       case 'text':
@@ -47,54 +31,36 @@ export const Message: React.FC<MessageProps> = ({ message }) => {
       
       case 'html':
         return (
-          <div
-            className="message-html"
-            dangerouslySetInnerHTML={{ __html: message.content || '' }}
-          />
-        );
-      
-      case 'image':
-        return (
-          <div className="message-image-container">
-            <img
-              src={message.url}
-              alt={message.text || 'Contenido del mensaje'}
-              className="message-image"
-              loading="lazy"
+          <div className="message-html">
+            <div className="export-dropdown">
+              <button 
+                className="export-button" 
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                title="Exportar datos"
+              >
+                <span className="icon">⤓</span>
+              </button>
+              {isDropdownOpen && (
+                <div className="dropdown-menu">
+                  <button onClick={() => handleExport('xlsx')}>XLSX</button>
+                  <button onClick={() => handleExport('csv')}>CSV</button>
+                  <button onClick={() => handleExport('json')}>JSON</button>
+                </div>
+              )}
+            </div>
+            <br />
+            <div
+              className="html-content"
+              dangerouslySetInnerHTML={{ __html: message.content || '' }}
             />
-            {message.text && <p className="message-image-caption">{message.text}</p>}
           </div>
         );
       
-      case 'chart_data':
-        if (message.chartType === 'bar' && message.data) {
-          const chartData = {
-            labels: message.data.map((item: ChartDataItem) => item.genero),
-            datasets: [
-              {
-                label: 'Cantidad',
-                data: message.data.map((item: ChartDataItem) => item.cantidad),
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-              },
-            ],
-          };
-
-          const options = {
-            responsive: true,
-            plugins: {
-              legend: {
-                position: 'top' as const,
-              },
-              title: {
-                display: true,
-                text: 'Distribución por Género',
-              },
-            },
-          };
-
+      case 'graph':
+        if (message.vegaSpec?.spec) {
           return (
             <div className="message-chart">
-              <Bar data={chartData} options={options} />
+              <CustomVegaChart spec={message.vegaSpec.spec} />
             </div>
           );
         }

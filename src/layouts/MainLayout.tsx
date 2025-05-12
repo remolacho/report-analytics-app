@@ -1,7 +1,8 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Breadcrumbs } from '../components/Breadcrumbs';
-import logo from '../assets/images/logo-liam.png';
+import logo from '../assets/images/logo-liam-2.png';
+import logo2 from '../assets/images/logo-liam.png';
 import './MainLayout.scss';
 
 export const MainLayout: React.FC = () => {
@@ -10,6 +11,7 @@ export const MainLayout: React.FC = () => {
       <header className="header">
         <div className="container">
           <img src={logo} alt="Liam Analytics Logo" />
+          <img src={logo2} alt="Liam Analytics Logo" />
         </div>
       </header>
       
